@@ -1,0 +1,102 @@
+Kauçuk Üretim Takip Sistemi – Prompt
+Amaç: Kauçuk üretim sürecinin hammadde girişinden müşteriye teslimata kadar olan tüm aşamalarını takip etmek, giriş kalite kontrolünü sağlamak, reçete bazlı üretimi yönetmek, iskarta (fire) takibini yapmak, kalite kontrol süreçlerini geliştirmek ve müşteri geri bildirimlerini analiz etmek.
+
+📌 1. Stok ve Giriş Kalite Yönetimi
+Hammadde alımı, uygunluk değerlendirmesi ve depo yönetimi sürecinin takibi yapılacak.
+
+🔹 Hammaddelerin Kaydı ve Takibi
+Hammadde Bilgileri:
+✅ Malzeme adı, tedarikçi bilgisi
+✅ Parti/Lot numarası
+✅ Alım miktarı, giriş tarihi
+✅ Son kullanma tarihi (varsa)
+
+Hammadde Giriş Uygunluk Değerlendirmesi:
+✅ Uygun → Depoya giriş yapılır.
+⚠️ Şartlı Uygun → Belirli koşullarda kullanılabilir (test, onay vs.).
+❌ Uygun Değil → İade veya imha edilir.
+
+Depo Yönetimi:
+📦 FIFO (First In, First Out) prensibine göre stok takibi.
+📦 Depo lokasyonu bazlı malzeme yerleşimi.
+📦 Barkod / QR Kod Entegrasyonu (Opsiyonel)
+
+📌 Önlem: Manuel giriş hatalarını önlemek için açılır listeler ve otomatik kontroller eklenecek.
+
+📌 2. Reçete Yönetimi ve Üretim Süreci
+Müşteri bazlı reçete oluşturma, stoktan düşme işlemleri ve üretim takibi yapılacak.
+
+🔹 Reçete Tanımlama ve Yönetimi
+Her müşteri için özel reçeteler oluşturulacak.
+Kullanılan malzemeler, oranlar ve üretim yöntemleri kayıt altına alınacak.
+Reçetelerde yapılan değişiklikler loglanacak.
+🔹 Üretim Takibi
+Müşteri bazlı üretim kayıtları tutulacak.
+Stoktan malzeme düşme işlemi otomatik olacak.
+Üretim tamamlandığında ürün bilgileri sisteme kaydedilecek.
+📌 Önlem: Reçeteye erişim ekstra bir şifre ile korunacak ve sadece yetkili kullanıcılar tarafından değiştirilebilecek.
+
+📌 3. Kalite Kontrol ve Onay Süreci
+Üretilen kauçukların test edilmesi, kalite standartlarına uygunluğunun kontrol edilmesi ve onay süreçlerinin takip edilmesi sağlanacak.
+
+🔹 Kalite Kontrol Testleri
+Ölçü toleransları
+Elastikiyet ve mukavemet testleri
+Yüzey kalitesi kontrolü
+Kimyasal uygunluk analizi (varsa)
+🔹 Kalite Onay Süreci
+Ürün testi başarılıysa onay verilir ve sevkiyata hazırlanır.
+Test başarısızsa nedenleri belirlenerek iskarta sürecine yönlendirilir.
+Kalite verileri sistemde kayıt altına alınır.
+📌 Önlem: Kalite kontrol verileri sistemde otomatik raporlanmalı ve takip edilmelidir.
+
+📌 4. İskarta (Fire) Kontrolü ve Analizi
+Üretim sırasında oluşan hatalar kayıt altına alınacak ve analiz edilerek kayıpların azaltılması sağlanacak.
+
+🔹 İskarta Kaydı
+İskarta Türleri:
+✅ Proses İsrafı (üretim sırasında kaybolan malzeme)
+✅ Kalite Kontrol Reddedilen Ürünler
+✅ Müşteri İadeleri
+✅ Hammadde Kaybı
+
+İskarta Giriş Formu İçeriği:
+📌 Ürün / Lot Numarası
+📌 Miktar (kg, adet, ton vs.)
+📌 İskarta Nedeni (Otomatik Seçim)
+📌 Sorumlu Kişi / Operatör
+📌 İlgili Makine veya Proses
+
+📌 Önlem:
+🔥 İskarta oranı belirli bir eşiği aşarsa otomatik uyarı ve rapor oluşturulmalı.
+
+📌 5. Performans ve Raporlama
+Sistemde verimlilik, kalite ve müşteri memnuniyeti ile ilgili analizler yapılacak.
+
+🔹 Performans Raporları
+📊 Giriş Kalitesi İzleme:
+
+Hatalı malzeme giriş oranı
+Tedarikçi bazlı uygunluk analizleri
+📊 Üretim Performansı:
+
+Verimlilik ölçümleri
+Üretim süreleri ve hata oranları
+📊 Müşteri Memnuniyeti:
+
+Şikayet analizleri
+Sipariş süreleri ve teslimat performansı
+📊 İskarta Raporları:
+
+Toplam iskarta yüzdesi
+En sık karşılaşılan hata türleri
+Operatör/makine bazlı hata oranları
+📌 Önlem: Tüm raporlar düzenli olarak analiz edilmeli ve süreç iyileştirme aksiyonları alınmalı.
+
+📌 6. Reçete Güvenliği
+Sistemde reçetelerin bilgi güvenliği korunacak.
+
+🔒 Ekstra Şifre Koruması: Reçete ekranına girişte ekstra bir şifre sorulacak.
+📝 Yetkili Kullanıcılar: Sadece belirlenen kişiler reçeteleri görüntüleyip değiştirebilecek.
+📜 Değişiklik Günlükleri (Loglar): Reçetelerde yapılan her değişiklik kayıt altına alınacak.
+

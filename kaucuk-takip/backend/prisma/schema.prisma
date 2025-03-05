@@ -1,0 +1,132 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Hammadde {
+  id            Int      @id @default(autoincrement())
+  kod           String   @unique
+  ad            String
+  birim         String
+  miktar        Float
+  kritik_miktar Float
+  birim_fiyat   Float
+  depo_lokasyonu String? @default("Ana Depo")
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+  recete_detaylari ReceteDetay[]
+}
+
+model Recete {
+  id          Int           @id @default(autoincrement())
+  kod         String        @unique
+  ad          String
+  aciklama    String?
+  toplam_miktar Float
+  talimatlar   String?
+  musteri_id   Int?
+  olusturma_tarihi DateTime @default(now())
+  created_at   DateTime     @default(now())
+  updated_at   DateTime     @updatedAt
+  recete_detaylari ReceteDetay[]
+}
+
+model KaliteKontrol {
+  id              Int      @id @default(autoincrement())
+  urun_id         Int
+  test_tarihi     DateTime @default(now())
+  sonuc           Boolean
+  olcum_degerleri String   // JSON formatında ölçüm değerleri
+  onaylayan_id    Int
+}
+
+model Iskarta {
+  id          Int      @id @default(autoincrement())
+  urun_id     Int
+  parti_no    String
+  makine_id   Int
+  miktar      Float
+  birim       String
+  neden       String
+  alt_neden   String?
+  durum       String
+  maliyet     Float?
+  notlar      String?
+  lokasyon    String
+  operator_id Int
+  tarih       DateTime @default(now())
+  operator    Kullanici @relation(fields: [operator_id], references: [id])
+
+  @@map("iskarta")
+}
+
+model Kullanici {
+  id              Int       @id @default(autoincrement())
+  kullanici_adi   String    @unique
+  sifre           String
+  ad_soyad        String?
+  rol             String
+  recete_erisim   Boolean   @default(false)
+  aktif           Boolean   @default(true)
+  created_at      DateTime  @default(now())
+  iskartalar      Iskarta[]
+}
+
+model ReceteErisimLog {
+  id            Int      @id @default(autoincrement())
+  kullanici_id  Int
+  recete_id     Int
+  islem_tipi    String
+  tarih         DateTime @default(now())
+  ip_adresi     String?
+  aciklama      String?
+}
+
+model ReceteDetay {
+  id          Int      @id @default(autoincrement())
+  recete_id   Int
+  hammadde_id Int
+  oran        Float    // Yüzde olarak (örn: 25.5 = %25.5)
+  miktar      Float    // toplam_miktar * oran / 100
+  siralama    Int      // Karışım sırası
+  recete      Recete   @relation(fields: [recete_id], references: [id])
+  hammadde    Hammadde @relation(fields: [hammadde_id], references: [id])
+
+  @@unique([recete_id, hammadde_id])
+}
+
+model KaliteTest {
+  id              Int      @id @default(autoincrement())
+  urun_id         Int      // Üretilen ürün ID
+  parti_no        String
+  test_tarihi     DateTime @default(now())
+  test_eden_id    Int      // Kullanıcı ID
+  sonuc           String   // "Uygun", "Şartlı", "Uygun Değil"
+  onay_durumu     String   // "Beklemede", "Onaylandı", "Reddedildi"
+  onaylayan_id    Int?     // Onaylayan kullanıcı ID
+  onay_tarihi     DateTime?
+  notlar          String?
+  olcumler        KaliteOlcum[]
+}
+
+model KaliteOlcum {
+  id              Int      @id @default(autoincrement())
+  test_id         Int
+  olcum_tipi      String   // "Sertlik", "Elastikiyet", "Mukavemet", "Yüzey"
+  olcum_degeri    Float
+  birim           String
+  min_deger       Float
+  max_deger       Float
+  sonuc           String   // "Uygun", "Uygun Değil"
+  kalite_test     KaliteTest @relation(fields: [test_id], references: [id])
+}
